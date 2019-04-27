@@ -1,3 +1,8 @@
+@font-face {
+	font-family: "Cold Warm";
+	src: url("{% static 'css/font/Cold Warm.otf' %}") format("opentype");
+}
+
 body {
 	background: black;
 	color: white;
@@ -11,11 +16,12 @@ main {
 	height: 80%;
 	margin: auto;
 }
-#magicLetters {
+#fossLetters {
 	width: 100%;
 	text-align: center;
 	margin-top: 50px;
 	font-size: 20vw; /* vw = % of viewport width */
+	font-family: "Cold Warm";
 }
 #colorSelector {
 	display: none;

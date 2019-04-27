@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 
 class Letter(models.Model):
-    letter = models.CharField(max_length=1)
+    letter = models.CharField(max_length=2)
 
     cur_r = models.CharField(max_length=3, default='255')
     cur_g = models.CharField(max_length=3, default='255')

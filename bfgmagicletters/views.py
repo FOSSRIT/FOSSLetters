@@ -41,8 +41,8 @@ def sms_push(request):
             cur_g = color.green
             cur_b = color.blue
             print('name')
-    post_data = [('method', 'POST'),('letter','M'),('cur_r','255'),('cur_g', '0'),('cur_b', '0')]     # a sequence of two element tuples
-    req = requests.porst()
+    post_data = [('method', 'POST'),('letter','F'),('cur_r','255'),('cur_g', '0'),('cur_b', '0')]     # a sequence of two element tuples
+    req = requests.post()
     req.method = "POST"
 
 
@@ -61,16 +61,14 @@ def create_post(request):
                 IP_PORT = '127.0.0.1:7890'
                 client = opc.Client(IP_PORT)
 
-                if let == "M":
+                if let == "F":
                     cur_channel = 0
-                elif let == "A":
+                elif let == "O":
                     cur_channel = 1
-                elif let == "G":
+                elif let == "S":
                     cur_channel = 2
-                elif let == "I":
-                    cur_channel = 3
                 else:
-                    cur_channel = 4
+                    cur_channel = 3
 
                 fps = 60
 
@@ -97,7 +95,7 @@ def create_reset(request):
 		IP_PORT = '127.0.0.1:7890'
 		client = opc.Client(IP_PORT)
 
-		post = Letter.objects.get(letter='M')
+		post = Letter.objects.get(letter='F')
 		post.cur_r = post.def_r
 		post.cur_g = post.def_g
 		post.cur_b = post.def_b
@@ -110,7 +108,7 @@ def create_reset(request):
 		client.put_pixels(pixels, channel=0)
 
 		pixels = []
-		post = Letter.objects.get(letter='A')
+		post = Letter.objects.get(letter='O')
 		post.cur_r = post.def_r
 		post.cur_g = post.def_g
 		post.cur_b = post.def_b
@@ -124,7 +122,7 @@ def create_reset(request):
 		client.put_pixels(pixels, channel=1)
 
 		pixels = []
-		post = Letter.objects.get(letter='G')
+		post = Letter.objects.get(letter='S')
 		post.cur_r = post.def_r
 		post.cur_g = post.def_g
 		post.cur_b = post.def_b
@@ -137,7 +135,7 @@ def create_reset(request):
 		client.put_pixels(pixels, channel=2)
 
 		pixels = []
-		post = Letter.objects.get(letter='I')
+		post = Letter.objects.get(letter='Z')
 		post.cur_r = post.def_r
 		post.cur_g = post.def_g
 		post.cur_b = post.def_b
@@ -149,20 +147,6 @@ def create_reset(request):
 			pixels.append((r, g, b))
 		client.put_pixels(pixels, channel=3)
 
-		pixels = []
-		post = Letter.objects.get(letter='C')
-		post.cur_r = post.def_r
-		post.cur_g = post.def_g
-		post.cur_b = post.def_b
-		post.save()
-		for ii in range(0, 512):
-			r = post.cur_r
-			g = post.cur_g
-			b = post.cur_b
-			pixels.append((r, g, b))
-		client.put_pixels(pixels, channel=4)
-
-
 		response_data = {'success': 1}
 	return HttpResponse(
 		json.dumps(response_data), content_type="application/json")
@@ -170,11 +154,10 @@ def create_reset(request):
 
 def home(request):
 	"""Load page"""
-	letter_M = Letter.objects.get(letter='M')
-	letter_A = Letter.objects.get(letter='A')
-	letter_G = Letter.objects.get(letter='G')
-	letter_I = Letter.objects.get(letter='I')
-	letter_C = Letter.objects.get(letter='C')
+	letter_F = Letter.objects.get(letter='F')
+	letter_O = Letter.objects.get(letter='O')
+	letter_S = Letter.objects.get(letter='S')
+	letter_Z = Letter.objects.get(letter='Z')
 	form = PostForm()
 
 	IP_PORT = '127.0.0.1:7890'
@@ -186,12 +169,12 @@ def home(request):
 	pixels = []
 	for ii in range(n_pixels):
 		pct = (ii / n_pixels)
-		r = letter_A.cur_r
-		g = letter_A.cur_g
-		b = letter_A.cur_b
+		r = letter_F.cur_r
+		g = letter_F.cur_g
+		b = letter_F.cur_b
 		pixels.append((r, g, b))
 	client.put_pixels(pixels, channel=0)
 
 	return render(request, 'letters.html', {
-		'M': letter_M, 'A': letter_A, 'G': letter_G,
-		'I': letter_I, 'C': letter_C, 'form': form})
+		'F': letter_F, 'O': letter_O, 'S': letter_S,
+		'Z': letter_Z, 'form': form})

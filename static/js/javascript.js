@@ -1,4 +1,4 @@
-var colors = {M: "#eb2f2e", A: "#f49d26",G: "#2eb150", I: "#3a509f", C: "#7e4c9b"};
+var colors = {F: "#eb2f2e", O: "#f49d26", S: "#2eb150", Z: "#3a509f"};
 
 $(document).ready(function(){
   /*window.addEventListener("DOMContentLoaded", function () {
@@ -10,25 +10,24 @@ $(document).ready(function(){
   });*/
   $('#letter_reset').on('click', function(event){
     event.preventDefault();
-    $("#magicM .letterFill").css("fill", colors.M);
-    $("#magicA .letterFill").css("fill", colors.A);
-    $("#magicG .letterFill").css("fill", colors.G);
-    $("#magicI .letterFill").css("fill", colors.I);
-    $("#magicC .letterFill").css("fill", colors.C);
+    $("#fossF").css("color", colors.F);
+    $("#fossO").css("color", colors.O);
+    $("#fossS").css("color", colors.S);
+    $("#fossZ").css("color", colors.Z);
     $("#letter_reset").submit();
   });
 var selected = "";
-$(".magicL").click(function() {
+$(".fossL").click(function() {
 if(selected == $(this).prop("id")) {
     selected = "";
-    $(".magicL .letterStroke").css("stroke", "black");
+    $(".fossL .letterStroke").css("stroke", "black");
     $("#colorSelector").hide();
 } else {
     selected = $(this).prop("id");
     $('#id_letter').val(selected.substr(-1))
-	$(".magicL .letterStroke").css("stroke", "black");
+	$(".fossL .letterStroke").css("stroke", "black");
 	$("#colorSelector").show();
-  var colorText = $(this).find(".letterFill").css("fill");
+  var colorText = $(this).css("color");
   $('#cp1').colorpicker({
     inline:true,
     format: "rgba",
@@ -38,7 +37,7 @@ if(selected == $(this).prop("id")) {
         r = e.color.toRgb().r;
         g = e.color.toRgb().g;
         b = e.color.toRgb().b;
-        $("#" + selected + " .letterFill").css("fill", colorText);
+        $("#" + selected).css("color", colorText);
         $('#id_cur_r').val(r);
         $('#id_cur_g').val(g);
         $('#id_cur_b').val(b);
